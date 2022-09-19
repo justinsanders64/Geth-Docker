@@ -58,16 +58,16 @@ services:
       --networkid=${NETWORK_ID}
       --allow-insecure-unlock
 
-  wireshark:
-    image: lscr.io/linuxserver/wireshark:latest
-    container_name: wireshark
-    cap_add:
-      - NET_ADMIN
-    network_mode: host
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/NewYork
-    volumes:
-      - $PWD/wireshark:/config
-    restart: unless-stopped
+  # wireshark:
+  #   image: lscr.io/linuxserver/wireshark:latest
+  #   container_name: wireshark
+  #   cap_add:
+  #     - NET_ADMIN
+  #   network_mode: host
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/NewYork
+  #   volumes:
+  #     - $PWD/wireshark:/config
+  #   restart: unless-stopped
