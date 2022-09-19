@@ -1,0 +1,14 @@
+eth.defaultAccount = eth.accounts[0]
+miner.setEtherbase(eth.accounts[0])
+
+personal.unlockAccount(eth.coinbase)
+
+eth.getBalance(eth.coinbase)
+
+eth.accounts
+
+net.peerCount
+
+admin.peers
+
+eth.sendTransaction({to: "", from: eth.accounts[0], value: 25000})
