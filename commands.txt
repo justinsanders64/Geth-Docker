@@ -1,3 +1,47 @@
+[DEV ENVIRONMENT SETUP]
+
+# 1. KEEP UBUNTU OR DEBIAN UP TO DATE
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y autoremove
+
+# 2. INSTALL THE DEPENDENCIES
+# install required dependencies
+sudo apt install qttools5-dev qttools5-dev-tools libqt5svg5-dev \
+                 qtmultimedia5-dev build-essential automake autoconf \ 
+                 libgtk2.0-dev libglib2.0-dev flex bison libpcap-dev \
+                 libgcrypt20-dev libpcre2-dev libnghttp2-dev cmake \
+                 libc-ares-dev libpcap-dev -y
+
+# 3. INSTALL BUILD TOOLS
+sudo apt-get install -y ninja-build
+
+# 4. WIRESHARK SOURCE
+git clone https://github.com/wireshark/wireshark.git
+cd wireshark/
+git checkout wireshark-3.6.8
+
+# 5. SETUP NINJA BUILD
+pwd: /wireshark
+mkdir ../wireshark-ninja
+cd ../wireshark-ninja/
+cmake -G Ninja ../wireshark
+
+# 6. SETUP ETHEREUM DISSECTORS
+git clone https://github.com/ConsenSys/ethereum-dissectors.git
+ln -s ethereum-dissectors wireshark/plugins/epan/ethereum
+nano wireshark/CMakeLists.txt  
+    - 	line 1607:
+        set(PLUGIN_SRC_DIRS
+            plugins/epan/ethercat
+            plugins/epan/ethereum   +
+            plugins/epan/gryphon
+cd wireshark-ninja && rm -rf *
+cmake -G Ninja ../wireshark                     # compiles wireshark source with new plugin
+ninja                                           # will build the executable
+
+[COMMANDS IN GETH CLIENTS]
+
 eth.defaultAccount = eth.accounts[0]
 miner.setEtherbase(eth.accounts[0])
 
