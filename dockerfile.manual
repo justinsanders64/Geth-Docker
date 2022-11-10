@@ -1,0 +1,24 @@
+FROM ubuntu:22.04
+RUN apt-get update && apt-get upgrade \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils \
+    software-properties-common iproute2 inetutils-ping curl host mtr-tiny \
+    tcpdump iptables netbase netcat-openbsd nano vim ssh git golang-go make \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN cd ~ && git clone https://github.com/jmkemp20/go-ethereum.git
+
+RUN cd ~/go-ethereum && make geth
+
+RUN cp ~/go-ethereum/build/bin/geth /usr/bin/geth
+
+ARG ACCOUNT_PASSWORD
+
+COPY genesis.json /root
+
+RUN geth init ~/genesis.json \
+    && rm -f ~/.ethereum/geth/nodekey \
+    && echo ${ACCOUNT_PASSWORD} > ~/password \
+    && geth account new --password ~/password
+
+EXPOSE 8545 8546 8551 30303 30303/udp 30304 30304/udp 30305 30305/udp 30306 30306/udp
+

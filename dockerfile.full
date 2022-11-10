@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils software-properties-common iproute2 inetutils-ping curl host mtr-tiny tcpdump iptables \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils software-properties-common iproute2 inetutils-ping curl host mtr-tiny tcpdump iptables netbase netcat-openbsd nano vim ssh \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && add-apt-repository -y ppa:ethereum/ethereum
@@ -12,7 +12,6 @@ ARG ACCOUNT_PASSWORD
 COPY genesis.json /tmp
 
 RUN geth init /tmp/genesis.json \
-    && rm -f ~/.ethereum/geth/nodekey \
     && echo ${ACCOUNT_PASSWORD} > /tmp/password \
     && geth account new --password /tmp/password \
     && rm -f /tmp/password

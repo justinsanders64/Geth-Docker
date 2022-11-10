@@ -1,6 +1,11 @@
 version: "3.7"
 
 networks:
+  bridge-net-0:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.1.0.0/24
   bridge-net-1:
     driver: bridge
     ipam:
@@ -28,83 +33,100 @@ services:
     cap_add:
       - NET_ADMIN
     networks:
-      bridge-net-1:
-        ipv4_address: 10.1.1.5
+      bridge-net-0:
+        ipv4_address: 10.1.0.10
+    ports:
+      - 30303:30303/udp
     env_file:
       - .env
-    image: geth-ubuntu:boot
+    image: geth-custom:boot
     container_name: geth-bootnode
     depends_on:
       - bridge-router
     command: >-
-      sh -c "ip route del default && ip route add default via 10.1.1.2 && 
-      geth --nodekeyhex b0ac22adcad37213c7c565810a50f1772291e7b0ce53fb73e7ec2a3c75bc13b5
-      --networkid 9713
-      --nat extip:10.1.1.5"
-
-  geth-ubuntu-rpc:
-    hostname: geth-ubuntu-rpc
-    cap_add:
-      - NET_ADMIN
-    networks:
-      bridge-net-1:
-        ipv4_address: 10.1.1.8
-    image: geth-ubuntu:rpc
-    container_name: geth-ubuntu-rpc
-    depends_on:
-      - bridge-router
-      - geth-ubuntu-bootnode
-    command: sh -c "ip route del default && ip route add default via 10.1.1.2 &&
-      geth --bootnodes enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@10.1.1.5:30303
-      --allow-insecure-unlock
-      --http
-      --http.addr 0.0.0.0
-      --http.api eth,web3,net,admin,personal
-      --http.corsdomain *
-      --networkid 9713
-      --nat extip:10.1.1.8"
+      sh -c "ip route del default && ip route add default via 10.1.0.2 && 
+      geth --nodekeyhex 3028271501873c4ecf501a2d3945dcb64ea3f27d6f163af45eb23ced9e92d85b
+      --networkid 12345
+      --netrestrict 10.1.0.0/22
+      --nat extip:10.1.0.10
+      --port 30303"
 
   geth-client-1:
     hostname: geth-client-1
     cap_add:
       - NET_ADMIN
     networks:
-      bridge-net-2:
-        ipv4_address: 10.1.2.20
+      bridge-net-1:
+        ipv4_address: 10.1.1.10
+    ports:
+      - 30304:30304/udp
     env_file:
       - .env
-    image: geth-ubuntu:node1
+    image: geth-custom:node1
     container_name: geth-client-1
     depends_on:
       - bridge-router
       - geth-ubuntu-bootnode
-    command: sh -c "ip route del default && ip route add default via 10.1.2.2 &&
-      geth --bootnodes enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@10.1.1.5:30303
+    command: sh -c "ip route del default && ip route add default via 10.1.1.2 &&
+      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
+      --nodekeyhex 4622d11b274848c32caf35dded1ed8e04316b1cde6579542f0510d86eb921298
       --mine
       --miner.threads 1
-      --networkid 9713
+      --networkid 12345
       --allow-insecure-unlock
-      --nat extip:10.1.2.20"
+      --netrestrict 10.1.0.0/22
+      --nat extip:10.1.1.10
+      --port 30304"
 
   geth-client-2:
     hostname: geth-client-2
     cap_add:
       - NET_ADMIN
     networks:
-      bridge-net-3:
-        ipv4_address: 10.1.3.30
+      bridge-net-2:
+        ipv4_address: 10.1.2.20
+    ports:
+      - 30305:30305/udp
     env_file:
       - .env
-    image: geth-ubuntu:node2
+    image: geth-custom:node2
     container_name: geth-client-2
     depends_on:
       - bridge-router
       - geth-ubuntu-bootnode
-    command: sh -c "ip route del default && ip route add default via 10.1.3.2 &&
-      geth --bootnodes enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@10.1.1.5:30303
-      --networkid 9713
+    command: sh -c "ip route del default && ip route add default via 10.1.2.2 &&
+      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
+      --nodekeyhex 816efc6b019e8863c382fe94cefe8e408d53697815590f03ce0a5cbfdd5f23f2
+      --networkid 12345
       --allow-insecure-unlock
-      --nat extip:10.1.3.30"
+      --netrestrict 10.1.0.0/22
+      --nat extip:10.1.2.20
+      --port 30305"
+
+  geth-client-3:
+    hostname: geth-client-3
+    cap_add:
+      - NET_ADMIN
+    networks:
+      bridge-net-3:
+        ipv4_address: 10.1.3.30
+    ports:
+      - 30306:30306/udp
+    env_file:
+      - .env
+    image: geth-custom:node3
+    container_name: geth-client-3
+    depends_on:
+      - bridge-router
+      - geth-ubuntu-bootnode
+    command: sh -c "ip route del default && ip route add default via 10.1.3.2 &&
+      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
+      --nodekeyhex 3fadc6b2fbd8c7cf1b2292b06ebfea903813b18b287dc29970a8a3aa253d757f
+      --networkid 12345
+      --allow-insecure-unlock
+      --netrestrict 10.1.0.0/22
+      --nat extip:10.1.3.30
+      --port 30306"
 
   bridge-router:
     image: ubuntu-with-tools
@@ -112,6 +134,8 @@ services:
       - NET_ADMIN
     hostname: bridge-router
     networks:
+      bridge-net-0:
+        ipv4_address: 10.1.0.2
       bridge-net-1:
         ipv4_address: 10.1.1.2
       bridge-net-2:
@@ -120,6 +144,7 @@ services:
         ipv4_address: 10.1.3.2
     command: >-
       sh -c "
+      iptables -A FORWARD -i eth3 -j ACCEPT &&
       iptables -A FORWARD -i eth2 -j ACCEPT &&
       iptables -A FORWARD -i eth1 -j ACCEPT &&
       iptables -A FORWARD -i eth0 -j ACCEPT && 
