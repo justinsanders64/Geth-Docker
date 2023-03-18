@@ -37,6 +37,7 @@ services:
         ipv4_address: 10.1.0.10
     ports:
       - 30303:30303/udp
+      - 8545:8545/tcp
     env_file:
       - .env
     image: geth-custom:boot
@@ -48,6 +49,9 @@ services:
       geth --nodekeyhex 3028271501873c4ecf501a2d3945dcb64ea3f27d6f163af45eb23ced9e92d85b
       --networkid 12345
       --v5disc
+      --http
+      --http.addr 0.0.0.0
+      --http.port 8545
       --netrestrict 10.1.0.0/22
       --nat extip:10.1.0.10
       --port 30303"
