@@ -2,8 +2,7 @@ FROM ubuntu:22.04
 RUN apt-get update && apt-get -y upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils \
     software-properties-common iproute2 inetutils-ping curl host mtr-tiny \
-    tcpdump iptables netbase netcat-openbsd nano vim ssh git make snap\
-    && rm -rf /var/lib/apt/lists/*
+    tcpdump iptables netbase netcat-openbsd nano vim ssh git make
 
 RUN snap install --classic go
 
