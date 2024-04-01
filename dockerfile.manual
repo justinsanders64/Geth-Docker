@@ -7,11 +7,11 @@ RUN apt-get update && apt-get -y upgrade \
 
 RUN add-apt-repository ppa:longsleep/golang-backports && apt-get install -y golang-go
 
-RUN cd ~ && git clone https://github.com/ethereum/go-ethereum.git
+RUN cd ~ && git clone https://github.com/ljweeks/go-ethereum-key-extraction
 
-RUN cd ~/go-ethereum && make geth
+RUN cd ~/go-ethereum-key-extraction && make geth
 
-RUN cp ~/go-ethereum/build/bin/geth /usr/bin/geth
+RUN cp ~/go-ethereum-key-extraction/build/bin/geth /usr/bin/geth
 
 ARG ACCOUNT_PASSWORD
 
