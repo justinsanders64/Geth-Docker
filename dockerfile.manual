@@ -17,7 +17,7 @@ ARG ACCOUNT_PASSWORD
 
 COPY genesis.json /root
 
-RUN geth init ~/genesis.json \
+RUN geth init --datadir data ~/genesis.json \
     && rm -f ~/.ethereum/geth/nodekey \
     && echo ${ACCOUNT_PASSWORD} > ~/password \
     && geth account new --password ~/password
