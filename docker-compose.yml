@@ -83,7 +83,8 @@ services:
       --netrestrict 10.1.0.0/22
       --nat extip:10.1.1.10
       --port 30304
-      --mine"
+      --mine
+      --miner.etherbase 0"
 
   geth-client-2:
     hostname: geth-client-2
@@ -112,7 +113,8 @@ services:
       --netrestrict 10.1.0.0/22
       --nat extip:10.1.2.20
       --port 30305
-      --mine"
+      --mine
+      --miner.etherbase 0"
 
   geth-client-3:
     hostname: geth-client-3
@@ -141,7 +143,8 @@ services:
       --netrestrict 10.1.0.0/22
       --nat extip:10.1.3.30
       --port 30306
-      --mine"
+      --mine
+      --miner.etherbase 0"
 
   bridge-router:
     image: ubuntu-with-tools
