@@ -48,7 +48,6 @@ services:
       sh -c "ip route del default && ip route add default via 10.1.0.2 && 
       geth --nodekeyhex 3028271501873c4ecf501a2d3945dcb64ea3f27d6f163af45eb23ced9e92d85b
       --networkid 1234565
-      --discv5
       --http
       --http.addr 0.0.0.0
       --http.port 8545
@@ -75,7 +74,6 @@ services:
     command: sh -c "ip route del default && ip route add default via 10.1.1.2 &&
       geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
       --nodekeyhex 4622d11b274848c32caf35dded1ed8e04316b1cde6579542f0510d86eb921298
-      --discv5
       --networkid 1234565
       --allow-insecure-unlock
       --unlock 0
@@ -84,7 +82,7 @@ services:
       --nat extip:10.1.1.10
       --port 30304
       --mine
-      --miner.etherbase 0"
+      --miner.etherbase 647a111830ed27c68abb82baed7373ab1520bf68"
 
   geth-client-2:
     hostname: geth-client-2
@@ -106,7 +104,6 @@ services:
       geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
       --nodekeyhex 816efc6b019e8863c382fe94cefe8e408d53697815590f03ce0a5cbfdd5f23f2
       --networkid 1234565
-      --discv5
       --allow-insecure-unlock
       --unlock 0
       --password /root/password
@@ -114,7 +111,7 @@ services:
       --nat extip:10.1.2.20
       --port 30305
       --mine
-      --miner.etherbase 0"
+      --miner.etherbase 09822ea72a7cf2f55f66fe7f4116cf957eb206a8"
 
   geth-client-3:
     hostname: geth-client-3
@@ -136,7 +133,6 @@ services:
       geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
       --nodekeyhex 3fadc6b2fbd8c7cf1b2292b06ebfea903813b18b287dc29970a8a3aa253d757f
       --networkid 1234565
-      --discv5
       --allow-insecure-unlock
       --unlock 0
       --password /root/password
@@ -144,7 +140,7 @@ services:
       --nat extip:10.1.3.30
       --port 30306
       --mine
-      --miner.etherbase 0"
+      --miner.etherbase 5c1ab2c0951ef2bf12243a587a2865ff41691967"
 
   bridge-router:
     image: ubuntu-with-tools
