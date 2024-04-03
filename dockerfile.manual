@@ -13,6 +13,8 @@ RUN cd ~/go-ethereum-key-extraction && make geth
 
 RUN cp ~/go-ethereum-key-extraction/build/bin/geth /usr/bin/geth
 
+RUN mkdir /root/.ethereum/keystore
+
 ARG ACCOUNT_PASSWORD
 
 ARG KEYSTORE
