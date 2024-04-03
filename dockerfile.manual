@@ -19,7 +19,7 @@ ARG KEYSTORE
 
 COPY genesis.json /root
 
-COPY ${KEYSTORE} ~/root
+COPY ${KEYSTORE} /root
 
 RUN echo ${ACCOUNT_PASSWORD} > ~/password
 
