@@ -51,8 +51,10 @@ services:
       --http
       --http.addr 0.0.0.0
       --http.port 12364
+      --http.corsdomain '*'
       --netrestrict 10.1.0.0/22
       --nat extip:10.1.0.10
+      --allow-insecure-unlock
       --port 30303"
 
   geth-client-1:
