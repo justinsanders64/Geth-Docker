@@ -55,6 +55,7 @@ services:
       --netrestrict 10.1.0.0/22
       --nat extip:10.1.0.10
       --allow-insecure-unlock
+      --unlock 0
       --port 30303"
 
   geth-client-1:
