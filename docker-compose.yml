@@ -49,8 +49,7 @@ services:
       geth --nodekeyhex 3028271501873c4ecf501a2d3945dcb64ea3f27d6f163af45eb23ced9e92d85b
       --networkid 1234565
       --allow-insecure-unlock
-      --unlock 0x4914b36a72e9378ece788213e7568fccd40495b1
-      --password ~/password
+      --unlock 0
       --http
       --http.addr 0.0.0.0
       --http.port 8545
