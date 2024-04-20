@@ -9,7 +9,9 @@ RUN add-apt-repository ppa:longsleep/golang-backports && apt-get install -y gola
 
 RUN cd ~ && git clone https://github.com/prysmaticlabs/prysm
 
-RUN CGO_CFLAGS="-O2 -D__BLST_PORTABLE__" go build -o=../beacon-chain ./cmd/beacon-chain
+RUN go mod init
+
+RUN go build -o=../beacon-chain ./cmd/beacon-chain
 
 RUN go build -o=/usr/bin/validator ~/prysm/cmd/validator
 
