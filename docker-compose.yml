@@ -38,6 +38,7 @@ services:
     ports:
       - 30303:30303/udp
       - 8545:8545/tcp
+      - 8080:8080
     env_file:
       - .env
     image: geth-custom:boot
@@ -45,103 +46,126 @@ services:
     depends_on:
       - bridge-router
     command: >-
-      sh -c "ip route del default && ip route add default via 10.1.0.2 && 
-      geth --nodekeyhex 3028271501873c4ecf501a2d3945dcb64ea3f27d6f163af45eb23ced9e92d85b
+      sh -c "ip route del default && ip route add default via 10.1.0.2 &&
+      beacon-chain --datadir beacondata 
+      --min-sync-peers 0 
+      --genesis-state genesis.ssz 
+      --bootstrap-node=
+      --interop-eth1data-votes
+      --chain-config-file config.yml
+      --contract-deployment-block 0
+      --chain-id 1234565
+      --accept-terms-of-use
+      --jwt-secret jwt.hex
+      --suggested-fee-recipient 0x44B3Cbc9d59738A89B974c12623Cf5219C3b6b32
+      --minimum-peers-per-subnet 0
+      --enable-debug-rpc-endpoints
+      --execution-endpoint gethdata/geth.ipc & &&
+      validator --datadir validatordata
+      --accept-terms-of-use
+      --interop-num-validators 64
+      --chain-config-file config.yml & &&
+      geth --datadir gethdata
+      --nodekeyhex 3028271501873c4ecf501a2d3945dcb64ea3f27d6f163af45eb23ced9e92d85b
       --networkid 1234565
       --allow-insecure-unlock
-      --unlock 0x4914b36a72e9378ece788213e7568fccd40495b1
+      --unlock 0x44B3Cbc9d59738A89B974c12623Cf5219C3b6b32
       --password ~/password
       --http
       --http.addr 0.0.0.0
       --http.port 8545
+      --http.api eth,net,web3
       --http.corsdomain '*'
+      --ws
+      --ws.api eth,net,web3
+      --ws.origins '*'
       --netrestrict 10.1.0.0/22
       --nat extip:10.1.0.10
       --port 30303"
 
-  geth-client-1:
-    hostname: geth-client-1
-    cap_add:
-      - NET_ADMIN
-    networks:
-      bridge-net-1:
-        ipv4_address: 10.1.1.10
-    ports:
-      - 30304:30304/udp
-    env_file:
-      - .env
-    image: geth-custom:node1
-    container_name: geth-client-1
-    depends_on:
-      - bridge-router
-      - geth-ubuntu-bootnode
-    command: sh -c "ip route del default && ip route add default via 10.1.1.2 &&
-      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
-      --nodekeyhex 4622d11b274848c32caf35dded1ed8e04316b1cde6579542f0510d86eb921298
-      --networkid 1234565
-      --allow-insecure-unlock
-      --unlock 0
-      --password /root/password
-      --netrestrict 10.1.0.0/22
-      --nat extip:10.1.1.10
-      --port 30304
-      --mine
+#  geth-client-1:
+#    hostname: geth-client-1
+#    cap_add:
+#      - NET_ADMIN
+#    networks:
+#      bridge-net-1:
+#        ipv4_address: 10.1.1.10
+#    ports:
+#      - 30304:30304/udp
+#    env_file:
+#      - .env
+#    image: geth-custom:node1
+#    container_name: geth-client-1
+#    depends_on:
+#      - bridge-router
+#      - geth-ubuntu-bootnode
+#    command: sh -c "ip route del default && ip route add default via 10.1.1.2 &&
+#      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
+#      --nodekeyhex 4622d11b274848c32caf35dded1ed8e04316b1cde6579542f0510d86eb921298
+#      --networkid 1234565
+#      --allow-insecure-unlock
+#      --unlock 0
+#      --password /root/password
+#      --netrestrict 10.1.0.0/22
+#      --nat extip:10.1.1.10
+#      --port 30304
+#      --mine
 
-  geth-client-2:
-    hostname: geth-client-2
-    cap_add:
-      - NET_ADMIN
-    networks:
-      bridge-net-2:
-        ipv4_address: 10.1.2.20
-    ports:
-      - 30305:30305/udp
-    env_file:
-      - .env
-    image: geth-custom:node2
-    container_name: geth-client-2
-    depends_on:
-      - bridge-router
-      - geth-ubuntu-bootnode
-    command: sh -c "ip route del default && ip route add default via 10.1.2.2 &&
-      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
-      --nodekeyhex 816efc6b019e8863c382fe94cefe8e408d53697815590f03ce0a5cbfdd5f23f2
-      --networkid 1234565
-      --allow-insecure-unlock
-      --unlock 0
-      --password /root/password
-      --netrestrict 10.1.0.0/22
-      --nat extip:10.1.2.20
-      --port 30305
-      --mine
+#  geth-client-2:
+#    hostname: geth-client-2
+#    cap_add:
+#      - NET_ADMIN
+#    networks:
+#      bridge-net-2:
+#        ipv4_address: 10.1.2.20
+#    ports:
+#      - 30305:30305/udp
+#    env_file:
+#      - .env
+#    image: geth-custom:node2
+#    container_name: geth-client-2
+#    depends_on:
+#      - bridge-router
+#      - geth-ubuntu-bootnode
+#    command: sh -c "ip route del default && ip route add default via 10.1.2.2 &&
+#      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
+#      --nodekeyhex 816efc6b019e8863c382fe94cefe8e408d53697815590f03ce0a5cbfdd5f23f2
+#      --networkid 1234565
+#      --allow-insecure-unlock
+#      --unlock 0
+#      --password /root/password
+#      --netrestrict 10.1.0.0/22
+#      --nat extip:10.1.2.20
+#      --port 30305
+#      --mine
 
-  geth-client-3:
-    hostname: geth-client-3
-    cap_add:
-      - NET_ADMIN
-    networks:
-      bridge-net-3:
-        ipv4_address: 10.1.3.30
-    ports:
-      - 30306:30306/udp
-    env_file:
-      - .env
-    image: geth-custom:node3
-    container_name: geth-client-3
-    depends_on:
-      - bridge-router
-      - geth-ubuntu-bootnode
-    command: sh -c "ip route del default && ip route add default via 10.1.3.2 &&
-      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
-      --nodekeyhex 3fadc6b2fbd8c7cf1b2292b06ebfea903813b18b287dc29970a8a3aa253d757f
-      --networkid 1234565
-      --allow-insecure-unlock
-      --unlock 0
-      --password /root/password
-      --netrestrict 10.1.0.0/22
-      --nat extip:10.1.3.30
-      --port 30306
-      --mine
+#  geth-client-3:
+#    hostname: geth-client-3
+#    cap_add:
+#      - NET_ADMIN
+#    networks:
+#      bridge-net-3:
+#        ipv4_address: 10.1.3.30
+#    ports:
+#      - 30306:30306/udp
+#    env_file:
+#      - .env
+#    image: geth-custom:node3
+#    container_name: geth-client-3
+#    depends_on:
+#      - bridge-router
+#      - geth-ubuntu-bootnode
+#    command: sh -c "ip route del default && ip route add default via 10.1.3.2 &&
+#      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
+#      --nodekeyhex 3fadc6b2fbd8c7cf1b2292b06ebfea903813b18b287dc29970a8a3aa253d757f
+#      --networkid 1234565
+#      --allow-insecure-unlock
+#      --unlock 0
+#      --password /root/password
+#      --netrestrict 10.1.0.0/22
+#      --nat extip:10.1.3.30
+#      --port 30306
+#      --mine
 
   bridge-router:
     image: ubuntu-with-tools

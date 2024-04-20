@@ -23,6 +23,8 @@ RUN cp ~/go-ethereum-key-extraction/build/bin/geth /usr/bin/geth
 
 ARG ACCOUNT_PASSWORD
 
+ARG ACCOUNT
+
 RUN cd ~ && openssl rand -hex 32 | tr -d "\n" > "jwt.hex"
 
 COPY genesis.json /root
@@ -31,11 +33,16 @@ COPY config.yml /root
 
 COPY run.sh /root
 
+COPY ${ACCOUNT} /root
+
 RUN echo ${ACCOUNT_PASSWORD} > ~/password
+
+RUN cd ~ && prysmctl testnet generate-genesis --fork capella --num-validators 64 --genesis-time-delay 60 --chain-config-file config.yml --geth-genesis-json-in genesis.json --geth-genesis-json-out genesis.json --output-ssz genesis.ssz
+
+RUN geth --datadir=gethdata account import ~/${ACCOUNT} --password ~/password
+
+RUN geth --datadir=gethdata init ~/genesis.json && rm -f ~/gethdata/geth/nodekey
 
 RUN chmod +x ~/run.sh
 
-RUN geth init ~/genesis.json && rm -f ~/.ethereum/geth/nodekey
-
-EXPOSE 8545 8546 8551 30303 30303/udp 30304 30304/udp 30305 30305/udp 30306 30306/udp
-
+EXPOSE 8545 8546 8551 30303 30303/udp 30304 30304/udp 30305 30305/udp 30306 30306/udp 8080

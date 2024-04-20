@@ -1,1 +1,4 @@
 #!/bin/bash
+geth --http --http.api eth,net,web3 --http.corsdomain '*' --ws --ws.api eth,net,web3 --authrpc.jwtsecret ~/jwt.hex --datadir gethdata --syncmode full --allow-insecure-unlock --unlock 0 --password ~/password &
+beacon-chain --datadir beacondata --min-sync-pairs 0 --genesis-state ~/genesis.ssz --bootstrap-node= --interop-eth1data-votes --chain-config-file config.yml --contract-deployment-block 0 --chain-id 1234565 --accept-terms-of-use --jwt-secret ~/jwt.hex --suggested-fee-recipient #TODO account --minimus-peers-per-subnet 0 --enable-debug-rpc-endpoints --execution-endpoint ~/gethdata/geth.ipc &
+validator --datadir validatordata --accept-terms-of-use --interop-num-validators 64 --chain-config-file config.yml
