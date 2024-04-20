@@ -11,7 +11,7 @@ RUN cd ~ && git clone https://github.com/prysmaticlabs/prysm
 
 RUN go mod init tidy
 
-RUN go build -o=../beacon-chain ./cmd/beacon-chain
+RUN go build -o=/usr/bin//beacon-chain ~/prysm/cmd/beacon-chain
 
 RUN go build -o=/usr/bin/validator ~/prysm/cmd/validator
 
