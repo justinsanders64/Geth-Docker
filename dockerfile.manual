@@ -9,7 +9,7 @@ RUN add-apt-repository ppa:longsleep/golang-backports && apt-get install -y gola
 
 RUN cd ~ && git clone https://github.com/prysmaticlabs/prysm
 
-RUN go mod init ~/prysm/cmd/beacon-chain
+RUN go mod init ~/prysm/cmd
 
 RUN go build -o=/usr/bin/beacon-chain ~/prysm/cmd/beacon-chain
 
