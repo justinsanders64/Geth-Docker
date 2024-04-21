@@ -46,7 +46,7 @@ services:
     depends_on:
       - bridge-router
     command: >-
-      sh -c "~/run.sh"
+      sh -c "cd ~ && ./run.sh"
 
 #  geth-client-1:
 #    hostname: geth-client-1
