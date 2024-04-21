@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -rf ~/.ethereum
 ip route del default
 ip route add default via 10.1.0.2
 beacon-chain --datadir beacondata --min-sync-peers 0 --genesis-state genesis.ssz --bootstrap-node= --interop-eth1data-votes --chain-config-file config.yml \
