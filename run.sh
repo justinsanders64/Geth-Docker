@@ -8,4 +8,4 @@ validator --datadir validatordata --accept-terms-of-use --interop-num-validators
 geth --nodekeyhex 3028271501873c4ecf501a2d3945dcb64ea3f27d6f163af45eb23ced9e92d85b --http --http.addr 0.0.0.0 --http.port 8545 --http.api eth,net,web3 --http.corsdomain '*' \
     --ws --ws.api eth,net,web3 --ws.origins '*' --netrestrict 10.1.0.0/22 --nat extip:10.1.0.10 --port 30303 --networkid 1234565 --authrpc.jwtsecret jwt.hex --syncmode full \
     --datadir gethdata --allow-insecure-unlock --unlock 0x44B3Cbc9d59738A89B974c12623Cf5219C3b6b32 --password ~/password
-    
+sleep infinity
