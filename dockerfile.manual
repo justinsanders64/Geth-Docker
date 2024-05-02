@@ -39,10 +39,10 @@ RUN echo ${ACCOUNT_PASSWORD} > ~/password
 
 RUN cd ~ && prysmctl testnet generate-genesis --fork capella --num-validators 64 --genesis-time-delay 600 --chain-config-file config.yml --geth-genesis-json-in genesis.json --geth-genesis-json-out genesis.json --output-ssz genesis.ssz
 
-RUN geth --datadir gethdata account import --password ~/password ~/${ACCOUNT}
+RUN cd ~ && geth --datadir gethdata account import --password ~/password ~/${ACCOUNT}
 
-RUN geth init --datadir gethdata ~/genesis.json && rm -f ~/gethdata/geth/nodekey
+RUN cd ~ && geth init --datadir gethdata ~/genesis.json && rm -f ~/gethdata/geth/nodekey
 
-RUN chmod +x ~/run.sh
+RUN cd ~ && chmod +x ~/run.sh
 
 EXPOSE 8545 8546 8551 30303 30303/udp 30304 30304/udp 30305 30305/udp 30306 30306/udp 8080
