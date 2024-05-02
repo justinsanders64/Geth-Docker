@@ -41,7 +41,7 @@ RUN cd ~ && prysmctl testnet generate-genesis --fork capella --num-validators 64
 
 RUN geth --datadir=gethdata account import --password ~/password ~/${ACCOUNT}
 
-RUN geth --datadir=gethdata init ~/genesis.json && rm -f ~/gethdata/geth/nodekey
+RUN geth init  --datadir=gethdata ~/genesis.json && rm -f ~/gethdata/geth/nodekey
 
 RUN chmod +x ~/run.sh
 
