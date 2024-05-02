@@ -1,4 +1,7 @@
 #!/bin/bash
+cd /root
+prysmctl testnet generate-genesis --fork capella --num-validators 64 --genesis-time-delay 60 --chain-config-file config.yml --geth-genesis-json-in genesis.json --geth-genesis-json-out genesis.json --output-ssz genesis.ssz
+
 ip route del default
 ip route add default via 10.1.0.2
 beacon-chain --datadir beacondata --min-sync-peers 0 --genesis-state genesis.ssz --bootstrap-node= --interop-eth1data-votes --chain-config-file config.yml \
