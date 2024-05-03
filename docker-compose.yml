@@ -41,9 +41,6 @@ services:
       - 8080:8080
     env_file:
       - .env
-    env:
-      - name: ACCOUNTFILEKEY
-        value: "bootnodekey"
     image: geth-custom:boot
     container_name: geth-bootnode
     depends_on:

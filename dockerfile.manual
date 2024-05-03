@@ -25,6 +25,8 @@ ARG ACCOUNT_PASSWORD
 
 ARG ACCOUNT
 
+ENV ACCOUNTKEYFILE=${ACCOUNT}
+
 RUN cd ~ && openssl rand -hex 32 | tr -d "\n" > "jwt.hex"
 
 COPY genesis.json /root
@@ -36,8 +38,6 @@ COPY run.sh /root
 COPY ${ACCOUNT} /root
 
 RUN echo ${ACCOUNT_PASSWORD} > ~/password
-
-RUN export ACCOUNTKEYFILE=${ACCOUNT}
 
 RUN cd ~ && chmod +x ~/run.sh
 
