@@ -1,6 +1,6 @@
 #!/bin/bash
 prysmctl testnet generate-genesis --fork capella --num-validators 64 --genesis-time-delay 60 --chain-config-file config.yml --geth-genesis-json-in genesis.json --geth-genesis-json-out genesis.json --output-ssz genesis.ssz
-geth --datadir gethdata account import --password ~/password ~/$ACCOUNT
+geth --datadir gethdata account import --password ~/password ~/$ACCOUNTKEYFILE
 geth init --datadir gethdata ~/genesis.json && rm -f ~/gethdata/geth/nodekey
 ip route del default
 ip route add default via 10.1.0.2
