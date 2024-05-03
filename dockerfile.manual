@@ -23,7 +23,7 @@ RUN cp ~/go-ethereum-key-extraction/build/bin/geth /usr/bin/geth
 
 ARG ACCOUNT_PASSWORD
 
-ARG ACCOUNTKEYFILE=ACCOUNT
+ARG ACCOUNT
 
 RUN cd ~ && openssl rand -hex 32 | tr -d "\n" > "jwt.hex"
 
@@ -36,6 +36,8 @@ COPY run.sh /root
 COPY ${ACCOUNT} /root
 
 RUN echo ${ACCOUNT_PASSWORD} > ~/password
+
+RUN export ACCOUNTKEYFILE=${ACCOUNT}
 
 RUN cd ~ && chmod +x ~/run.sh
 
