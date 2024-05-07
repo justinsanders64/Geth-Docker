@@ -9,6 +9,8 @@ RUN add-apt-repository ppa:longsleep/golang-backports && apt-get install -y gola
 
 RUN cd ~ && git clone https://github.com/prysmaticlabs/prysm
 
+RUN cd ~/prysm && git reset --hard 26355768a010206dd256758b6a4c1967033d7918
+
 RUN cd ~/prysm && go build -o=/usr/bin/beacon-chain ./cmd/beacon-chain
 
 RUN cd ~/prysm && go build -o=/usr/bin/validator ./cmd/validator
