@@ -38,8 +38,6 @@ services:
     ports:
       - 30303:30303/udp
       - 8545:8545/tcp
-      - 12000:12000/udp
-      - 13000:13000/tcp
     env_file:
       - .env
     image: geth-custom:boot
