@@ -44,6 +44,6 @@ else
         --minimum-peers-per-subnet 0 --enable-debug-rpc-endpoints --execution-endpoint gethdata/geth.ipc --p2p-udp-port 12003 --p2p-tcp-port 13003 --grpc-gateway-port 3503 --rpc.port 4003 > ~/beacon.log 2>&1 &
     geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303 \
         --nodekeyhex 3fadc6b2fbd8c7cf1b2292b06ebfea903813b18b287dc29970a8a3aa253d757f --http --http.addr 0.0.0.0 --http.port 8548 --http.api eth,net,web3 --http.corsdomain '*' \
-        --ws --ws.api eth,net,web3 --ws.origins '*'--netrestrict 10.1.0.0/22 --nat extip:10.1.3.30 --port 30306 --networkid 1234565 --authrpc.jwtsecret jwt.hex --syncmode full \
+        --ws --ws.api eth,net,web3 --ws.origins '*' --netrestrict 10.1.0.0/22 --nat extip:10.1.3.30 --port 30306 --networkid 1234565 --authrpc.jwtsecret jwt.hex --syncmode full \
         --datadir gethdata --allow-insecure-unlock --unlock 0x8D56B0225D863d29b5D80d5aAAe2Ee249361D9ac --password ~/password --authrpc.port 8554
 fi
