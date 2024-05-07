@@ -62,6 +62,7 @@ services:
         ipv4_address: 10.1.1.10
     ports:
       - 30304:30304/udp
+      - 8546:8546/tcp
       - 12001:12001/udp
       - 13001:13001/tcp
       - 3501:3501/tcp
@@ -85,6 +86,12 @@ services:
 #        ipv4_address: 10.1.2.20
 #    ports:
 #      - 30305:30305/udp
+#      - 8547:8547/tcp
+#      - 12002:12002/udp
+#      - 13002:13002/tcp
+#      - 3502:3502/tcp
+#      - 8553:8553/tcp
+#      - 4002:4002/tcp
 #    env_file:
 #      - .env
 #    image: geth-custom:node2
@@ -92,17 +99,7 @@ services:
 #    depends_on:
 #      - bridge-router
 #      - geth-ubuntu-bootnode
-#    command: sh -c "ip route del default && ip route add default via 10.1.2.2 &&
-#      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
-#      --nodekeyhex 816efc6b019e8863c382fe94cefe8e408d53697815590f03ce0a5cbfdd5f23f2
-#      --networkid 1234565
-#      --allow-insecure-unlock
-#      --unlock 0
-#      --password /root/password
-#      --netrestrict 10.1.0.0/22
-#      --nat extip:10.1.2.20
-#      --port 30305
-#      --mine
+#    command: sh -c "cd ~ && ./run.sh"
 
 #  geth-client-3:
 #    hostname: geth-client-3
@@ -113,6 +110,12 @@ services:
 #        ipv4_address: 10.1.3.30
 #    ports:
 #      - 30306:30306/udp
+#      - 8548:8548/tcp
+#      - 12003:12003/udp
+#      - 13003:13003/tcp
+#      - 3503:3503/tcp
+#      - 8554:8554/tcp
+#      - 4003:4003/tcp
 #    env_file:
 #      - .env
 #    image: geth-custom:node3
@@ -120,17 +123,7 @@ services:
 #    depends_on:
 #      - bridge-router
 #      - geth-ubuntu-bootnode
-#    command: sh -c "ip route del default && ip route add default via 10.1.3.2 &&
-#      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
-#      --nodekeyhex 3fadc6b2fbd8c7cf1b2292b06ebfea903813b18b287dc29970a8a3aa253d757f
-#      --networkid 1234565
-#      --allow-insecure-unlock
-#      --unlock 0
-#      --password /root/password
-#      --netrestrict 10.1.0.0/22
-#      --nat extip:10.1.3.30
-#      --port 30306
-#      --mine
+#    command: sh -c "cd ~ && ./run.sh"
 
   bridge-router:
     image: ubuntu-with-tools
