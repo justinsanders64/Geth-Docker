@@ -38,7 +38,13 @@ services:
     ports:
       - 30303:30303/udp
       - 8545:8545/tcp
-      - 8080:8080
+      - 8080:8080/tcp
+      - 8551:8551/tcp
+      - 12000:12000/udp
+      - 13000:13000/tcp
+      - 3500:3500/tcp
+      - 8551:8551/tcp
+      - 4000:4000/tcp
     env_file:
       - .env
     image: geth-custom:boot
@@ -48,33 +54,28 @@ services:
     command: >-
       sh -c "cd ~ && ./run.sh"
 
-#  geth-client-1:
-#    hostname: geth-client-1
-#    cap_add:
-#      - NET_ADMIN
-#    networks:
-#      bridge-net-1:
-#        ipv4_address: 10.1.1.10
-#    ports:
-#      - 30304:30304/udp
-#    env_file:
-#      - .env
-#    image: geth-custom:node1
-#    container_name: geth-client-1
-#    depends_on:
-#      - bridge-router
-#      - geth-ubuntu-bootnode
-#    command: sh -c "ip route del default && ip route add default via 10.1.1.2 &&
-#      geth --bootnodes enode://2c4b6808e788537ca13ab4c35e6311bc2553b65323fb0c9e9a831303a1059b8754aab13dbb78c03a7a31beee5c2f2fb570393f056d54fa83ebd7e277039cc7b6@10.1.0.10:30303
-#      --nodekeyhex 4622d11b274848c32caf35dded1ed8e04316b1cde6579542f0510d86eb921298
-#      --networkid 1234565
-#      --allow-insecure-unlock
-#      --unlock 0
-#      --password /root/password
-#      --netrestrict 10.1.0.0/22
-#      --nat extip:10.1.1.10
-#      --port 30304
-#      --mine
+  geth-client-1:
+    hostname: geth-client-1
+    cap_add:
+      - NET_ADMIN
+    networks:
+      bridge-net-1:
+        ipv4_address: 10.1.1.10
+    ports:
+      - 30304:30304/udp
+      - 12001:12001/udp
+      - 13001:13001/tcp
+      - 3501:3501/tcp
+      - 8552:8552/tcp
+      - 4001:4001/tcp
+    env_file:
+      - .env
+    image: geth-custom:node1
+    container_name: geth-client-1
+    depends_on:
+      - bridge-router
+      - geth-ubuntu-bootnode
+    command: sh -c "cd ~ && ./run.sh"
 
 #  geth-client-2:
 #    hostname: geth-client-2
