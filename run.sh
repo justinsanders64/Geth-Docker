@@ -5,6 +5,7 @@ geth init --datadir gethdata ~/genesis.json && rm -f ~/gethdata/geth/nodekey
 ip route del default
 if [ $ACCOUNTKEYFILE == "bootnodekey" ]
 then
+    export TEST=true
     ip route add default via 10.1.0.2
     beacon-chain --datadir beacondata --min-sync-peers 0 --genesis-state genesis.ssz --bootstrap-node= --interop-eth1data-votes --chain-config-file config.yml \
         --contract-deployment-block 0 --chain-id 1234565 --accept-terms-of-use --jwt-secret jwt.hex --suggested-fee-recipient 0x44B3Cbc9d59738A89B974c12623Cf5219C3b6b32 \
@@ -34,6 +35,7 @@ then
         --netrestrict 10.1.0.0/22 --nat extip:10.1.2.20 --port 30305 --networkid 1234565 --authrpc.jwtsecret jwt.hex --syncmode full \
         --datadir gethdata --allow-insecure-unlock --unlock 0xcC9Ca1a6B77Fec6e53dA34F132D7ABD8aBb250d7 --password ~/password
 else
+    export TEST=false
     ip route add default via 10.1.3.2
     beacon-chain --datadir beacondata --min-sync-peers 0 --genesis-state genesis.ssz \
         --bootstrap-node=enr:-MK4QPapdv2rDTQkSL8S6ElrCGg9cabfL4j6Ko5BFPwxJ008BXYzuDSqeqCzAnOXQ0jv-7kQnpvMAwOQ6IUrp4ve_GyGAY89RTSZh2F0dG5ldHOIAwAAAAAAAACEZXRoMpBa8xKTIAAAkwAdBAAAAAAAgmlkgnY0gmlwhAoBAAqJc2VjcDI1NmsxoQOm-pFj0cyMnsbcmBeUBnND-bG03jVJOgd9UeOYglE9rohzeW5jbmV0cw-DdGNwgjLIg3VkcIIu4A \
