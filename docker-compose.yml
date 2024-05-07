@@ -77,53 +77,53 @@ services:
       - geth-ubuntu-bootnode
     command: sh -c "cd ~ && ./run.sh"
 
-#  geth-client-2:
-#    hostname: geth-client-2
-#    cap_add:
-#      - NET_ADMIN
-#    networks:
-#      bridge-net-2:
-#        ipv4_address: 10.1.2.20
-#    ports:
-#      - 30305:30305/udp
-#      - 8547:8547/tcp
-#      - 12002:12002/udp
-#      - 13002:13002/tcp
-#      - 3502:3502/tcp
-#      - 8553:8553/tcp
-#      - 4002:4002/tcp
-#    env_file:
-#      - .env
-#    image: geth-custom:node2
-#    container_name: geth-client-2
-#    depends_on:
-#      - bridge-router
-#      - geth-ubuntu-bootnode
-#    command: sh -c "cd ~ && ./run.sh"
+  geth-client-2:
+    hostname: geth-client-2
+    cap_add:
+      - NET_ADMIN
+    networks:
+      bridge-net-2:
+        ipv4_address: 10.1.2.20
+    ports:
+      - 30305:30305/udp
+      - 8547:8547/tcp
+      - 12002:12002/udp
+      - 13002:13002/tcp
+      - 3502:3502/tcp
+      - 8553:8553/tcp
+      - 4002:4002/tcp
+    env_file:
+      - .env
+    image: geth-custom:node2
+    container_name: geth-client-2
+    depends_on:
+      - bridge-router
+      - geth-ubuntu-bootnode
+    command: sh -c "cd ~ && ./run.sh"
 
-#  geth-client-3:
-#    hostname: geth-client-3
-#    cap_add:
-#      - NET_ADMIN
-#    networks:
-#      bridge-net-3:
-#        ipv4_address: 10.1.3.30
-#    ports:
-#      - 30306:30306/udp
-#      - 8548:8548/tcp
-#      - 12003:12003/udp
-#      - 13003:13003/tcp
-#      - 3503:3503/tcp
-#      - 8554:8554/tcp
-#      - 4003:4003/tcp
-#    env_file:
-#      - .env
-#    image: geth-custom:node3
-#    container_name: geth-client-3
-#    depends_on:
-#      - bridge-router
-#      - geth-ubuntu-bootnode
-#    command: sh -c "cd ~ && ./run.sh"
+  geth-client-3:
+    hostname: geth-client-3
+    cap_add:
+      - NET_ADMIN
+    networks:
+      bridge-net-3:
+        ipv4_address: 10.1.3.30
+    ports:
+      - 30306:30306/udp
+      - 8548:8548/tcp
+      - 12003:12003/udp
+      - 13003:13003/tcp
+      - 3503:3503/tcp
+      - 8554:8554/tcp
+      - 4003:4003/tcp
+    env_file:
+      - .env
+    image: geth-custom:node3
+    container_name: geth-client-3
+    depends_on:
+      - bridge-router
+      - geth-ubuntu-bootnode
+    command: sh -c "cd ~ && ./run.sh"
 
   bridge-router:
     image: ubuntu-with-tools
