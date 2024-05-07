@@ -38,6 +38,12 @@ services:
     ports:
       - 30303:30303/udp
       - 8545:8545/tcp
+      - 8080:8080/tcp
+      - 8551:8551/tcp
+      - 12000:12000/udp
+      - 13000:13000/tcp
+      - 3500:3500/tcp
+      - 4000:4000/tcp
     env_file:
       - .env
     image: geth-custom:boot
@@ -58,6 +64,9 @@ services:
       - 30304:30304/udp
       - 12001:12001/udp
       - 13001:13001/tcp
+      - 3501:3501/tcp
+      - 8552:8552/tcp
+      - 4001:4001/tcp
     env_file:
       - .env
     image: geth-custom:node1
