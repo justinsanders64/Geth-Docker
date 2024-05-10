@@ -5,8 +5,10 @@ RUN apt-get update && apt-get -y upgrade \
     tcpdump iptables netbase netcat-openbsd nano vim ssh git make net-tools\
     && rm -rf /var/lib/apt/lists/*
 
+#Force install of latest go-lang
 RUN add-apt-repository ppa:longsleep/golang-backports && apt-get install -y golang-go
 
+#Clone prysm
 RUN cd ~ && git clone https://github.com/prysmaticlabs/prysm
 
 #Forced to known working commit
@@ -18,6 +20,7 @@ RUN cd ~/prysm && go build -o=/usr/bin/validator ./cmd/validator
 
 RUN cd ~/prysm && go build -o=/usr/bin/prysmctl ./cmd/prysmctl
 
+#Custom Geth Source Code
 RUN cd ~ && git clone https://github.com/ljweeks/go-ethereum-key-extraction
 
 RUN cd ~/go-ethereum-key-extraction && make geth
@@ -28,6 +31,7 @@ ARG ACCOUNT_PASSWORD
 
 ARG ACCOUNT
 
+#Filename containing private key for account - Used in run.sh
 ENV ACCOUNTKEYFILE=${ACCOUNT}
 
 RUN cd ~ && openssl rand -hex 32 | tr -d "\n" > "jwt.hex"

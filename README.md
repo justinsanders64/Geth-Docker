@@ -6,6 +6,12 @@ To instantly spin up a development/private Ethereum network made up of Go-Ethere
 
 In depth description tbd.
 
+Do not use accounts on MainNet as private keys are contained in files on this repo
+- 0x44B3Cbc9d59738A89B974c12623Cf5219C3b6b32
+- 0xD4ED63fD37a8a8746832f20Ef349089c8319b54C
+- 0xcC9Ca1a6B77Fec6e53dA34F132D7ABD8aBb250d7
+- 0x8D56B0225D863d29b5D80d5aAAe2Ee249361D9ac
+
 ## Getting Started
 
 ### Dependencies
@@ -48,6 +54,10 @@ Reach out to Joshua Kemp @ kemp3jm@dukes.jmu.edu
 Contributors names and contact info
 
 * Joshua Kemp
+
+Modifications made for Proof of Stake
+
+* Justin Sanders
 
 ## Version History
 
